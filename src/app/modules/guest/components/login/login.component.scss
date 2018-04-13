@@ -1,0 +1,34 @@
+.matPrefix {
+  margin-right: .5em;
+}
+
+.matPrefix {
+  margin-left: .5em;
+}
+
+.form-input {
+  font-size: 1.3em;
+  width: 98%;
+}
+
+@media (max-width: 992px) {
+  .form-control {
+    width: 70%;
+  }
+}
+
+@media (max-width: 768px) {
+  .form-control {
+    width: 100%;
+  }
+}
+
+@media (min-width: 992px) {
+  .form-control {
+    width: 50%;
+  }
+}
+
+
+
+

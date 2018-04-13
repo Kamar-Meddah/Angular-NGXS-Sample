@@ -198,6 +198,26 @@
     tree-kill "^1.0.0"
     webpack-sources "^1.1.0"
 
+"@ngx-loading-bar/core@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@ngx-loading-bar/core/-/core-1.6.0.tgz#66f60db33aac6cc9a2ee733cfe1b894e8ce0f394"
+  dependencies:
+    tslib "^1.7.1"
+
+"@ngx-loading-bar/http-client@^1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@ngx-loading-bar/http-client/-/http-client-1.6.0.tgz#fe87928bdb2935e5994d2aa5ebd6f1ae1ad24861"
+  dependencies:
+    "@ngx-loading-bar/core" "1.6.0"
+    tslib "^1.7.1"
+
+"@ngx-loading-bar/router@^1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@ngx-loading-bar/router/-/router-1.6.0.tgz#8b0964a5fba85040bd3b26b449734510a457c921"
+  dependencies:
+    "@ngx-loading-bar/core" "1.6.0"
+    tslib "^1.7.1"
+
 "@ngxs/devtools-plugin@^3.0.0-rc.0":
   version "3.0.0-rc.0"
   resolved "https://registry.yarnpkg.com/@ngxs/devtools-plugin/-/devtools-plugin-3.0.0-rc.0.tgz#75c48ace8b7f2cc666ad2eda7bc53e04715bd915"
@@ -834,6 +854,10 @@ boom@5.x.x:
   resolved "https://registry.yarnpkg.com/boom/-/boom-5.2.0.tgz#5dd9da6ee3a5f302077436290cb717d3f4a54e02"
   dependencies:
     hoek "4.x.x"
+
+bootstrap@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.1.0.tgz#110b05c31a236d56dbc9adcda6dd16f53738a28a"
 
 brace-expansion@^1.1.7:
   version "1.1.11"
@@ -4319,6 +4343,12 @@ netmask@~1.0.4:
 next-tick@1:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
+
+ngx-toastr@^8.4.0:
+  version "8.4.0"
+  resolved "https://registry.yarnpkg.com/ngx-toastr/-/ngx-toastr-8.4.0.tgz#0fd73b66ab9857cb9eb9974ab259070cb4c458c5"
+  dependencies:
+    tslib "^1.7.1"
 
 no-case@^2.2.0:
   version "2.3.2"

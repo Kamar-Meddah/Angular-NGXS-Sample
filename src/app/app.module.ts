@@ -12,22 +12,30 @@ import {NgxsModule} from '@ngxs/store';
 import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
 import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
 import {LoggedInfoState} from './store/loggedInfo.state';
-import {CoreModule} from './modules/core.module';
+import {ToastrModule} from 'ngx-toastr';
+import {SharedModule} from './modules/shared.module';
+import {LoadingBarRouterModule} from "@ngx-loading-bar/router";
+import {LoadingBarHttpClientModule} from "@ngx-loading-bar/http-client";
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
-    CoreModule,
+    SharedModule,
     AppRoutingModule,
+    LoadingBarRouterModule,
+    LoadingBarHttpClientModule,
     NgxsModule.forRoot([
       LoggedInfoState
     ]),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot(),
     BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production})
   ],
   bootstrap: [AppComponent]
