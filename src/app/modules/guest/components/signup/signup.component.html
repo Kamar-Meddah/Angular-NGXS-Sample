@@ -1,0 +1,54 @@
+<mat-card class="container">
+  <mat-card-header>
+    <mat-card-title class="mat-typography">
+      <h1 class="mat-headline mat-display-1"> Signup </h1>
+    </mat-card-title>
+  </mat-card-header>
+  <form (ngSubmit)="signup(form)" #form="ngForm">
+    <mat-card-content class="text-center">
+
+      <mat-form-field class="form-input">
+        <input #usernameRef="ngModel" matInput placeholder="Username" name="username" [(ngModel)]="username" minlength="4" pattern="^[a-zA-Z0-9\-\.]+$" type="text" required>
+        <mat-icon matPrefix class="matPrefix">supervisor_account</mat-icon>
+        <mat-error *ngIf="usernameRef.pristine">Username is required</mat-error>
+        <mat-error *ngIf="usernameRef.errors?.pattern">Invalid Username</mat-error>
+        <mat-error *ngIf="usernameRef.errors?.minlength">Username is too short</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-input">
+        <input #emailRef="ngModel" matInput placeholder="Email" name="email" [(ngModel)]="email" minlength="4" pattern="^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$" type="text" required>
+        <mat-icon matPrefix class="matPrefix">email</mat-icon>
+        <mat-error *ngIf="emailRef.pristine">Email required</mat-error>
+        <mat-error *ngIf="emailRef.errors?.pattern">Invalid Email</mat-error>
+        <mat-error *ngIf="emailRef.errors?.minlength">Email too short</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-input">
+        <input #passwordRef="ngModel" matInput placeholder="password" name="password" [(ngModel)]="password" minlength="4" type="password" required>
+        <mat-icon matPrefix class="matPrefix">lock</mat-icon>
+        <mat-error *ngIf="passwordRef.pristine">Password is required</mat-error>
+        <mat-error *ngIf="passwordRef.errors?.minlength">Weak Password</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-input" style="margin-bottom: 0px">
+        <input #confirmedPasswordRef="ngModel" matInput placeholder="Confirm password" name="confirmedPassword" [(ngModel)]="confirmedPassword" minlength="4" type="password" required>
+        <mat-icon matPrefix class="matPrefix">lock</mat-icon>
+        <mat-error *ngIf="confirmedPasswordRef.pristine">Password is required</mat-error>
+        <mat-error *ngIf="confirmedPasswordRef.errors?.minlength">Weak Password</mat-error>
+      </mat-form-field>
+
+      <div class="text-left">
+        <small style="color: #f44336;margin-left: .2em" *ngIf="confirmedPasswordRef.value !== passwordRef.value">Password does not match</small>
+
+        <p>
+          <a class="link" routerLink="/login">Already have an account ?</a>
+        </p>
+      </div>
+
+    </mat-card-content>
+
+    <mat-card-actions class="text-right">
+      <button  mat-raised-button color="primary" type="submit" name="login">Signin</button>
+    </mat-card-actions>
+  </form>
+</mat-card>
