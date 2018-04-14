@@ -36,7 +36,7 @@ export class LoggedInfoState {
     localStorage.setItem('token', payload);
     setState({
       token: payload,
-      role: jwt.aud ? jwt.aud : null,
+      role: jwt.aud =='null' ? jwt.aud : null,
       isLogged: jwt != null,
     });
   }
