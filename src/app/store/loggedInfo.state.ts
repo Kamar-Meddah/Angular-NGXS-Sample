@@ -1,6 +1,8 @@
 import {Action, Selector, State, StateContext} from '@ngxs/store';
 import {Disconnect, SetLoggedInfo} from './loggedInfo.actions';
 import {LoggedInfo} from '../model/loggedInfo';
+import * as jwt_decode from 'jwt-decode';
+import JWT from "../model/jwt";
 
 @State<LoggedInfo>({
   name: 'loggedInfo',
@@ -30,8 +32,13 @@ export class LoggedInfoState {
 
   @Action(SetLoggedInfo)
   public setLoggedInfo({getState, setState}: StateContext<LoggedInfo>, {payload}: SetLoggedInfo): void {
-    localStorage.setItem('token', payload.token);
-    setState(payload);
+    const jwt: JWT = jwt_decode(payload);
+    localStorage.setItem('token', payload);
+    setState({
+      token: payload,
+      role: jwt.aud ? jwt.aud : null,
+      isLogged: jwt != null,
+    });
   }
 
   @Action(Disconnect)

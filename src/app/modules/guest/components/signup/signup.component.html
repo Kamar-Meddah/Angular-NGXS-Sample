@@ -8,7 +8,7 @@
     <mat-card-content class="text-center">
 
       <mat-form-field class="form-input">
-        <input #usernameRef="ngModel" matInput placeholder="Username" name="username" [(ngModel)]="username" minlength="4" pattern="^[a-zA-Z0-9\-\.]+$" type="text" required>
+        <input #usernameRef="ngModel" matInput placeholder="Username" name="username" [(ngModel)]="username" minlength="4" pattern="^[a-zA-Z0-9\-\._]+$" type="text" required>
         <mat-icon matPrefix class="matPrefix">supervisor_account</mat-icon>
         <mat-error *ngIf="usernameRef.pristine">Username is required</mat-error>
         <mat-error *ngIf="usernameRef.errors?.pattern">Invalid Username</mat-error>

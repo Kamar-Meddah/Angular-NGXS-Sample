@@ -16,7 +16,8 @@ import {ToastrModule} from 'ngx-toastr';
 import {SharedModule} from './modules/shared.module';
 import {LoadingBarRouterModule} from "@ngx-loading-bar/router";
 import {LoadingBarHttpClientModule} from "@ngx-loading-bar/http-client";
-import { NavbarComponent } from './components/navbar/navbar.component';
+import {NavbarComponent} from './components/navbar/navbar.component';
+import {CoreModule} from "./modules/core.module";
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
   ],
   imports: [
     BrowserModule,
+    CoreModule,
     SharedModule,
     AppRoutingModule,
     LoadingBarRouterModule,
@@ -35,7 +37,13 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot(),
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 5000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+      closeButton: true,
+      progressBar: false,
+    }),
     ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production})
   ],
   bootstrap: [AppComponent]

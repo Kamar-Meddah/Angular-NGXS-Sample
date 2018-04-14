@@ -9,7 +9,7 @@
 
       <mat-form-field class="form-input">
         <input
-          #usernameRef="ngModel" matInput placeholder="Username or Email" name="username" [(ngModel)]="username" minlength="4" pattern="^([\.A-z0-9\-@]+)$" type="text" required>
+          #usernameRef="ngModel" matInput placeholder="Username or Email" name="username" [(ngModel)]="username" minlength="4" pattern="^([_\.A-z0-9\-@]+)$" type="text" required>
         <mat-icon matPrefix class="matPrefix">supervisor_account</mat-icon>
         <mat-error *ngIf="usernameRef.pristine">Username or Email is required</mat-error>
         <mat-error *ngIf="usernameRef.errors?.pattern">Invalid Username or Email</mat-error>

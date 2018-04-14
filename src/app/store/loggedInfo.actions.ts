@@ -3,7 +3,7 @@ import {LoggedInfo} from '../model/loggedInfo';
 export class SetLoggedInfo {
   static readonly type = '[loggedInfo] set';
 
-  public constructor(public payload: LoggedInfo) {
+  public constructor(public payload: string) {
   }
 }
 
