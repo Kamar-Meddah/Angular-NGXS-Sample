@@ -5,6 +5,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {ToastrService} from "ngx-toastr";
 import {Store} from "@ngxs/store";
 import {SetLoggedInfo} from "../../../../store/loggedInfo.actions";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -17,10 +18,13 @@ export class LoginComponent implements OnInit {
   private password: string;
 
 
-  constructor(private authService: AuthService, private toastr: ToastrService, private store: Store) {
+  constructor(private authService: AuthService, private toastr: ToastrService, private store: Store, private route: Router) {
   }
 
   ngOnInit() {
+    if (this.authService.checkIfLogged()) {
+      this.route.navigate(['']);
+    }
   }
 
   public login(form: FormControl): void {

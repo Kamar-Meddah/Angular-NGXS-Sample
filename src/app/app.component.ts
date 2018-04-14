@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Store} from "@ngxs/store";
 import {AuthService} from "./service/auth.service";
-import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
+import {HttpErrorResponse} from "@angular/common/http";
 import {SetLoggedInfo} from "./store/loggedInfo.actions";
 
 @Component({
@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
     const token = localStorage.getItem('token');
     if (token) {
       this.authService.checkToken(token)
-        .then((res: HttpResponse<{valid: boolean}>) => {
+        .then((res: { valid: boolean }) => {
           if (res.valid) {
             this.store.dispatch(new SetLoggedInfo(token));
           } else {

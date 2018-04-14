@@ -2,7 +2,7 @@ import {Action, Selector, State, StateContext} from '@ngxs/store';
 import {Disconnect, SetLoggedInfo} from './loggedInfo.actions';
 import {LoggedInfo} from '../model/loggedInfo';
 import * as jwt_decode from 'jwt-decode';
-import JWT from "../model/jwt";
+import JWT from '../model/jwt';
 
 @State<LoggedInfo>({
   name: 'loggedInfo',
@@ -36,7 +36,7 @@ export class LoggedInfoState {
     localStorage.setItem('token', payload);
     setState({
       token: payload,
-      role: jwt.aud =='null' ? jwt.aud : null,
+      role: jwt.aud === 'null' ? jwt.aud : null,
       isLogged: jwt != null,
     });
   }
