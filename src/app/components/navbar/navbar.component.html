@@ -1,17 +1,22 @@
-<mat-toolbar color="primary" class="toolbar">
+<mat-toolbar color="primary" class="toolbar" (swipeleft)="sidenav.close()" (swiperight)="sidenav.open()">
   <mat-toolbar-row>
+    <button mat-icon-button (click)="sidenav.toggle()" class="d-block d-sm-none">
+      <mat-icon>menu</mat-icon>
+    </button>
     <!--  Guest mode    -->
-    <button mat-icon-button [matMenuTriggerFor]="menu" >
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="d-none d-sm-block">
       <mat-icon>more_vert</mat-icon>
     </button>
 
-    <a mat-icon-button routerLink="/" class="link" style="color:white;"><mat-icon>home</mat-icon></a>
+    <a mat-icon-button routerLink="/" class="link" style="color:white;">
+      <mat-icon>home</mat-icon>
+    </a>
   </mat-toolbar-row>
 </mat-toolbar>
 <br>
 
 
-<mat-menu #menu="matMenu">
+<mat-menu #menu="matMenu" class="d-none d-sm-block">
 
   <button mat-menu-item (click)="navigate('/')" *ngIf="(isLogged$ | async)">
     <mat-icon>home</mat-icon>
@@ -38,4 +43,50 @@
     <span>Sign</span>
   </button>
 </mat-menu>
+
+
+<mat-sidenav-container class="sidebar d-block d-sm-none" (swipeleft)="sidenav.close()" >
+  <mat-sidenav #sidenav mode="side" [(opened)]="opened">
+    <mat-list role="list" (click)="sidenav.close()">
+      <!-- guest -->
+      <mat-list-item role="listitem" *ngIf="!(isLogged$ | async)">
+        <button mat-menu-item (click)="navigate('/login')">
+          <mat-icon>people</mat-icon>
+          <span>Login</span>
+        </button>
+      </mat-list-item>
+      <mat-list-item role="listitem" *ngIf="!(isLogged$ | async)">
+        <button mat-menu-item (click)="navigate('/sign')">
+          <mat-icon>assignment</mat-icon>
+          <span>Sign</span>
+        </button>
+      </mat-list-item>
+      <!------- End guest ------->
+
+      <!-------- logged --------->
+      <mat-list-item role="listitem">
+        <button mat-menu-item (click)="navigate('/')" *ngIf="(isLogged$ | async)">
+          <mat-icon>home</mat-icon>
+          <span>Home</span>
+        </button>
+      </mat-list-item>
+      <mat-list-item role="listitem">
+
+        <button mat-menu-item (click)="navigate('/settings')" *ngIf="(isLogged$ | async)">
+          <mat-icon>settings</mat-icon>
+          <span>Settings</span>
+        </button>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item role="listitem">
+        <button mat-menu-item (click)="logout()" *ngIf="(isLogged$ | async)">
+          <mat-icon>do_not_disturb_alt</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-list-item>
+      <!------- End logged ------->
+    </mat-list>
+  </mat-sidenav>
+</mat-sidenav-container>
+
 

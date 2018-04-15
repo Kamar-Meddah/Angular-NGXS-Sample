@@ -6,3 +6,11 @@
   background-color: #1976D2 !important;
   box-shadow: 1px 1px 8px 2px darkgrey
 }
+
+.sidebar {
+  position: fixed;
+  height: 100%;
+  left: 0;
+  top: 4em;
+  overflow: auto;
+}
