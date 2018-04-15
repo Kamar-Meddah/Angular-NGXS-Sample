@@ -5,15 +5,26 @@
       <mat-icon>more_vert</mat-icon>
     </button>
 
-    <span><a routerLink="/">NavBrand</a></span>
+    <a mat-icon-button routerLink="/" class="link" style="color:white;"><mat-icon>home</mat-icon></a>
   </mat-toolbar-row>
 </mat-toolbar>
+<br>
 
 
 <mat-menu #menu="matMenu">
 
-  <button mat-menu-item (click)="logout()" *ngIf="(isLogged$ | async)">
+  <button mat-menu-item (click)="navigate('/')" *ngIf="(isLogged$ | async)">
     <mat-icon>home</mat-icon>
+    <span>Home</span>
+  </button>
+
+  <button mat-menu-item (click)="navigate('/settings')" *ngIf="(isLogged$ | async)">
+    <mat-icon>settings</mat-icon>
+    <span>Settings</span>
+  </button>
+  <mat-divider></mat-divider>
+  <button mat-menu-item (click)="logout()" *ngIf="(isLogged$ | async)">
+    <mat-icon>do_not_disturb_alt</mat-icon>
     <span>Logout</span>
   </button>
 

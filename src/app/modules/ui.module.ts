@@ -2,9 +2,11 @@ import {NgModule} from '@angular/core';
 import {
   MatButtonModule,
   MatCardModule,
+  MatDividerModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule, MatMenuModule,
+  MatInputModule,
+  MatMenuModule,
   MatToolbarModule
 } from '@angular/material';
 
@@ -17,6 +19,7 @@ import {
     MatInputModule,
     MatButtonModule,
     MatMenuModule,
+    MatDividerModule,
   ],
   exports: [
     MatCardModule,
@@ -26,6 +29,7 @@ import {
     MatInputModule,
     MatButtonModule,
     MatMenuModule,
+    MatDividerModule,
   ]
 })
 export class UiModule {

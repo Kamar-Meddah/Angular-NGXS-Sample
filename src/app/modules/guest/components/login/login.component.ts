@@ -1,33 +1,44 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {AuthService} from '../../../../service/auth.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ToastrService} from 'ngx-toastr';
-import {Store} from '@ngxs/store';
+import {Select, Store} from '@ngxs/store';
 import {SetLoggedInfo} from '../../../../store/loggedInfo.actions';
 import {Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
+import {LoggedInfoState} from '../../../../store/loggedInfo.state';
+import {Observable} from 'rxjs/Observable';
+import {ObserveOnSubscriber} from 'rxjs/operators/observeOn';
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   private username: string;
   private password: string;
+  @Select(LoggedInfoState.getIsLogged) isLogged$: Observable<boolean>;
+  private subscription: any;
 
 
   constructor(private titleService: Title, private authService: AuthService, private toastr: ToastrService, private store: Store, private router: Router) {
   }
 
   ngOnInit() {
-    if (this.authService.checkIfLogged()) {
-      this.router.navigate(['']);
-    } else {
-      this.titleService.setTitle('Login');
-    }
+    this.subscription = this.isLogged$.subscribe((res) => {
+        if (res) {
+          this.router.navigate(['/']);
+        } else {
+          this.titleService.setTitle('Login');
+        }
+      },
+      (err => console.log(err))
+    );
+
   }
 
   public login(form: FormControl): void {
@@ -47,5 +58,9 @@ export class LoginComponent implements OnInit {
         });
     }
   }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+}
 
 }

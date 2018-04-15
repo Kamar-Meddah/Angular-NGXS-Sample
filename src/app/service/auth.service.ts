@@ -26,7 +26,7 @@ export class AuthService {
   }
 
   public checkIfLogged(): boolean {
-    return this.store.selectSnapshot((state => state.loggedInfo.isLogged));
+    return localStorage.getItem('token') !== null;
   }
 
   public logout(): Promise<any> {

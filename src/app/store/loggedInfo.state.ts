@@ -7,6 +7,7 @@ export interface LoggedInfo {
   token: string | null;
   role: string | null;
   isLogged: boolean;
+  user: string;
 }
 
 @State<LoggedInfo>({
@@ -14,7 +15,8 @@ export interface LoggedInfo {
   defaults: {
     token: null,
     role: null,
-    isLogged: false
+    isLogged: false,
+    user: null,
   }
 })
 
@@ -31,6 +33,11 @@ export class LoggedInfoState {
   }
 
   @Selector()
+  public static getUser(state: LoggedInfo): string {
+    return state.user;
+  }
+
+  @Selector()
   public static getIsLogged(state: LoggedInfo): boolean {
     return state.isLogged;
   }
@@ -43,13 +50,14 @@ export class LoggedInfoState {
       token: payload,
       role: jwt.aud === 'null' ? jwt.aud : null,
       isLogged: jwt != null,
+      user: jwt.iss,
     });
   }
 
   @Action(Disconnect)
   public disconnect({getState, setState}: StateContext<LoggedInfo>): void {
     localStorage.clear();
-    setState({token: null, role: null, isLogged: false});
+    setState({token: null, role: null, isLogged: false, user: null});
   }
 
 }

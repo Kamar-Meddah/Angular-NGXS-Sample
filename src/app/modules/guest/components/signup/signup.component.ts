@@ -24,7 +24,8 @@ export class SignupComponent implements OnInit {
 
   ngOnInit() {
     if (this.authService.checkIfLogged()) {
-      this.router.navigate(['']);
+      console.log("hello")
+      this.router.navigate(['/']);
     } else {
       this.titleService.setTitle('Signin');
     }

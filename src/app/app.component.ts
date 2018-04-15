@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Store} from '@ngxs/store';
 import {AuthService} from './service/auth.service';
 import {HttpErrorResponse} from '@angular/common/http';
-import {SetLoggedInfo} from './store/loggedInfo.actions';
+import {Disconnect, SetLoggedInfo} from './store/loggedInfo.actions';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,10 @@ import {SetLoggedInfo} from './store/loggedInfo.actions';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private store: Store, private authService: AuthService) {
+  private date: number;
+
+  constructor(private store: Store, private authService: AuthService, private router: Router) {
+    this.date = new Date().getFullYear();
   }
 
   ngOnInit() {
@@ -22,7 +26,8 @@ export class AppComponent implements OnInit {
           if (res.valid) {
             this.store.dispatch(new SetLoggedInfo(token));
           } else {
-            localStorage.clear();
+            this.store.dispatch(new Disconnect());
+            this.router.navigate(['login']);
           }
         })
         .catch((err: HttpErrorResponse) => {

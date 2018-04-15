@@ -1,0 +1,66 @@
+<div class="container">
+  <div class="mat-typography">
+    <h1 class="mat-headline mat-display-2"> Settings </h1>
+  </div>
+</div>
+<mat-card class="container">
+  <mat-card-header>
+    <mat-card-title class="mat-typography">
+      <h1 class="mat-headline mat-display-1"> Edit Password </h1>
+    </mat-card-title>
+  </mat-card-header>
+  <form (ngSubmit)="updatePassword(form)" #form="ngForm">
+    <mat-card-content class="text-center">
+
+      <mat-form-field class="form-input" style="margin-bottom: 0px">
+        <input #oldPasswordRef="ngModel" matInput placeholder="Old password" name="oldPassword"
+               [(ngModel)]="oldPassword" minlength="4" type="password" required>
+        <mat-icon matPrefix class="matPrefix">lock</mat-icon>
+        <mat-error *ngIf="oldPasswordRef.pristine">Password is required</mat-error>
+        <mat-error *ngIf="oldPasswordRef.errors?.minlength">Weak Password</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-input" style="margin-bottom: 0px">
+        <input #newPasswordRef="ngModel" matInput placeholder="New password" name="newPassword"
+               [(ngModel)]="newPassword" minlength="4" type="password" required>
+        <mat-icon matPrefix class="matPrefix">lock</mat-icon>
+        <mat-error *ngIf="newPasswordRef.pristine">Password is required</mat-error>
+        <mat-error *ngIf="newPasswordRef.errors?.minlength">Weak Password</mat-error>
+      </mat-form-field>
+
+    </mat-card-content>
+    <small style="color: #f44336;margin-left: .2em"
+           *ngIf="((oldPasswordRef.value === newPasswordRef.value)&& oldPasswordRef.value != undefined)">Passwords match
+    </small>
+    <mat-card-actions class="text-right">
+      <button mat-raised-button color="primary" type="submit" name="updatePassword">Update</button>
+    </mat-card-actions>
+  </form>
+</mat-card>
+
+<br>
+<mat-card class="container">
+  <mat-card-header>
+    <mat-card-title class="mat-typography">
+      <h1 class="mat-headline mat-display-1"> Edit Email </h1>
+    </mat-card-title>
+  </mat-card-header>
+  <form (ngSubmit)="updateEmail(formEmail)" #formEmail="ngForm">
+    <mat-card-content class="text-center">
+
+      <mat-form-field class="form-input">
+        <input #emailRef="ngModel" matInput placeholder="Email" name="email" [(ngModel)]="email" minlength="4"
+               pattern="^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$" type="text" required>
+        <mat-icon matPrefix class="matPrefix">email</mat-icon>
+        <mat-error *ngIf="emailRef.pristine">Email required</mat-error>
+        <mat-error *ngIf="emailRef.errors?.pattern">Invalid Email</mat-error>
+        <mat-error *ngIf="emailRef.errors?.minlength">Email too short</mat-error>
+      </mat-form-field>
+
+    </mat-card-content>
+
+    <mat-card-actions class="text-right">
+      <button mat-raised-button color="primary" type="submit" name="updateEmail">Update</button>
+    </mat-card-actions>
+  </form>
+</mat-card>
