@@ -10,7 +10,7 @@ export class AuthService {
   }
 
   public authenticate(username: string, password: string): Promise<object> {
-    return this.http.put(
+    return this.http.post(
       `${BaseConf.ressourceUrl}auth/`,
       {username: username, password: password},
     ).toPromise();
@@ -27,6 +27,19 @@ export class AuthService {
 
   public checkIfLogged(): boolean {
     return this.store.selectSnapshot((state => state.loggedInfo.isLogged));
+  }
+
+  public logout(): Promise<any> {
+    return this.http.put(
+      `${BaseConf.ressourceUrl}auth/`,
+      {},
+      {
+        headers: new HttpHeaders().set('Authorization', `${this.getToken()}`)
+      }).toPromise();
+  }
+
+  private getToken(): string {
+    return this.store.selectSnapshot((state => state.loggedInfo.token));
   }
 
 }

@@ -1,19 +1,28 @@
 <mat-toolbar color="primary" class="toolbar">
   <mat-toolbar-row>
-    <button mat-icon-button [matMenuTriggerFor]="menu">
+    <!--  Guest mode    -->
+    <button mat-icon-button [matMenuTriggerFor]="menu" >
       <mat-icon>more_vert</mat-icon>
     </button>
+
     <span>NavBrand</span>
   </mat-toolbar-row>
 </mat-toolbar>
 
 
 <mat-menu #menu="matMenu">
-  <button mat-menu-item (click)="navigate('/login')">
+
+  <button mat-menu-item (click)="logout()" *ngIf="(isLogged$ | async)">
+    <mat-icon>home</mat-icon>
+    <span>Logout</span>
+  </button>
+
+  <!-- Guest Mode -->
+  <button mat-menu-item (click)="navigate('/login')" *ngIf="!(isLogged$ | async)">
     <mat-icon>people</mat-icon>
     <span>Login</span>
   </button>
-  <button mat-menu-item (click)="navigate('/sign')">
+  <button mat-menu-item (click)="navigate('/sign')" *ngIf="!(isLogged$ | async)">
     <mat-icon>assignment</mat-icon>
     <span>Sign</span>
   </button>

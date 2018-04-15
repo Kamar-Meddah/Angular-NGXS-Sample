@@ -7,10 +7,10 @@ export interface User {
 
 export class UserImpl implements User {
 
-  private username: string;
-  private email: string;
-  private password: string;
-  private role: string;
+  public username: string;
+  public  email: string;
+  public  password: string;
+  public role: string;
 
   public constructor(username: string = null, password: string = null, email: string = null, role: string = null) {
     this.username = username;

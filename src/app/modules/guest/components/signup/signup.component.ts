@@ -5,6 +5,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {ToastrService} from 'ngx-toastr';
 import {Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
+import {AuthService} from "../../../../service/auth.service";
 
 @Component({
   selector: 'app-signup',
@@ -18,11 +19,15 @@ export class SignupComponent implements OnInit {
   private confirmedPassword: string;
   private email: string;
 
-  constructor(private userService: UserService, private tostr: ToastrService, private router: Router, private titleService: Title) {
+  constructor(private authService: AuthService, private userService: UserService, private tostr: ToastrService, private router: Router, private titleService: Title) {
   }
 
   ngOnInit() {
-    this.titleService.setTitle('Signin');
+    if (this.authService.checkIfLogged()) {
+      this.router.navigate(['']);
+    } else {
+      this.titleService.setTitle('Signin');
+    }
   }
 
   public sign(form: FormControl): void {
