@@ -1,8 +1,13 @@
 import {Action, Selector, State, StateContext} from '@ngxs/store';
 import {Disconnect, SetLoggedInfo} from './loggedInfo.actions';
-import {LoggedInfo} from '../model/loggedInfo';
 import * as jwt_decode from 'jwt-decode';
 import JWT from '../model/jwt';
+
+export interface LoggedInfo {
+  token: string | null;
+  role: string | null;
+  isLogged: boolean;
+}
 
 @State<LoggedInfo>({
   name: 'loggedInfo',

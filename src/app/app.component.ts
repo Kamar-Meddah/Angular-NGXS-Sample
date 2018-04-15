@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Store} from "@ngxs/store";
-import {AuthService} from "./service/auth.service";
-import {HttpErrorResponse} from "@angular/common/http";
-import {SetLoggedInfo} from "./store/loggedInfo.actions";
+import {Store} from '@ngxs/store';
+import {AuthService} from './service/auth.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {SetLoggedInfo} from './store/loggedInfo.actions';
 
 @Component({
   selector: 'app-root',

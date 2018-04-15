@@ -8,8 +8,8 @@
     <mat-card-content class="text-center">
 
       <mat-form-field class="form-input">
-        <input
-          #usernameRef="ngModel" matInput placeholder="Username or Email" name="username" [(ngModel)]="username" minlength="4" pattern="^([_\.A-z0-9\-@]+)$" type="text" required>
+        <input #usernameRef="ngModel" matInput placeholder="Username or Email" name="username" [(ngModel)]="username"
+               minlength="4" pattern="^([_\.A-z0-9\-@]+)$" type="text" required>
         <mat-icon matPrefix class="matPrefix">supervisor_account</mat-icon>
         <mat-error *ngIf="usernameRef.pristine">Username or Email is required</mat-error>
         <mat-error *ngIf="usernameRef.errors?.pattern">Invalid Username or Email</mat-error>
@@ -17,7 +17,8 @@
       </mat-form-field>
 
       <mat-form-field class="form-input">
-        <input #passwordRef="ngModel" matInput placeholder="password" name="password" [(ngModel)]="password" minlength="4" type="password" required>
+        <input #passwordRef="ngModel" matInput placeholder="password" name="password" [(ngModel)]="password"
+               minlength="4" type="password" required>
         <mat-icon matPrefix class="matPrefix">lock</mat-icon>
         <mat-error *ngIf="passwordRef.pristine">Password is required</mat-error>
         <mat-error *ngIf="passwordRef.errors?.minlength">Weak Password</mat-error>

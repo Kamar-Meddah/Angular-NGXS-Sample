@@ -2,10 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {AuthService} from '../../../../service/auth.service';
 import {HttpErrorResponse} from '@angular/common/http';
-import {ToastrService} from "ngx-toastr";
-import {Store} from "@ngxs/store";
-import {SetLoggedInfo} from "../../../../store/loggedInfo.actions";
-import {Router} from "@angular/router";
+import {ToastrService} from 'ngx-toastr';
+import {Store} from '@ngxs/store';
+import {SetLoggedInfo} from '../../../../store/loggedInfo.actions';
+import {Router} from '@angular/router';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -18,12 +19,14 @@ export class LoginComponent implements OnInit {
   private password: string;
 
 
-  constructor(private authService: AuthService, private toastr: ToastrService, private store: Store, private route: Router) {
+  constructor(private titleService: Title, private authService: AuthService, private toastr: ToastrService, private store: Store, private router: Router) {
   }
 
   ngOnInit() {
     if (this.authService.checkIfLogged()) {
-      this.route.navigate(['']);
+      this.router.navigate(['']);
+    } else {
+      this.titleService.setTitle('Login');
     }
   }
 
@@ -36,6 +39,7 @@ export class LoginComponent implements OnInit {
           } else {
             this.toastr.success(`${res.message}`);
             this.store.dispatch(new SetLoggedInfo(res.token));
+            this.router.navigate(['']);
           }
         })
         .catch((err: HttpErrorResponse) => {

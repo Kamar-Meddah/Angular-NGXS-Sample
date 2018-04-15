@@ -1,5 +1,3 @@
-import {LoggedInfo} from '../model/loggedInfo';
-
 export class SetLoggedInfo {
   static readonly type = '[loggedInfo] set';
 
