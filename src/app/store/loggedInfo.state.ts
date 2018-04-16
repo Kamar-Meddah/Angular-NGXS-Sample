@@ -15,7 +15,7 @@ export interface LoggedInfo {
   defaults: {
     token: null,
     role: null,
-    isLogged: false,
+    isLogged: localStorage.getItem('token') !== null,
     user: null,
   }
 })
@@ -48,10 +48,11 @@ export class LoggedInfoState {
     localStorage.setItem('token', payload);
     setState({
       token: payload,
-      role: jwt.aud === 'null' ? jwt.aud : null,
+      role: jwt.aud === 'null' ? null : jwt.aud,
       isLogged: jwt != null,
       user: jwt.iss,
-    });
+    })
+    ;
   }
 
   @Action(Disconnect)
