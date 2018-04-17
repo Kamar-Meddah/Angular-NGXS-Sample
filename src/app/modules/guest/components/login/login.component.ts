@@ -9,8 +9,6 @@ import {Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {LoggedInfoState} from '../../../../store/loggedInfo.state';
 import {Observable} from 'rxjs/Observable';
-import {ObserveOnSubscriber} from 'rxjs/operators/observeOn';
-import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'app-login',
@@ -19,10 +17,10 @@ import {Subscription} from "rxjs/Subscription";
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-  private username: string;
-  private password: string;
+  public username: string;
+  public password: string;
   @Select(LoggedInfoState.getIsLogged) isLogged$: Observable<boolean>;
-  private subscription: any;
+  public subscription: any;
 
 
   constructor(private titleService: Title, private authService: AuthService, private toastr: ToastrService, private store: Store, private router: Router) {
@@ -44,23 +42,23 @@ export class LoginComponent implements OnInit, OnDestroy {
   public login(form: FormControl): void {
     if (form.valid) {
       this.authService.authenticate(this.username, this.password)
-        .then((res: { token: string, message: string }) => {
-          if (res.token === null) {
-            this.toastr.error(`${res.message}`);
-          } else {
-            this.toastr.success(`${res.message}`);
-            this.store.dispatch(new SetLoggedInfo(res.token));
-            this.router.navigate(['']);
-          }
+        .then((res: { token: string }) => {
+          this.toastr.success(`Successfully Logged`);
+          this.store.dispatch(new SetLoggedInfo(res.token));
+          this.router.navigate(['']);
         })
         .catch((err: HttpErrorResponse) => {
-          console.log(err.message);
+          if (err.status === 406) {
+            this.toastr.error(`${err.error.message}`);
+          } else {
+            this.toastr.error(`You are currently offline`);
+          }
         });
     }
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
-}
+  }
 
 }

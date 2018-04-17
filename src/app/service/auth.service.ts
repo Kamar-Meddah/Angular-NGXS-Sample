@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BaseConf} from '../config/base.conf';
 import {Store} from '@ngxs/store';
+import {User} from "../model/user";
 
 @Injectable()
 export class AuthService {
@@ -17,7 +18,7 @@ export class AuthService {
   }
 
   public checkToken(token: string): Promise<object> {
-    return this.http.get(
+    return this.http.head(
       `${BaseConf.ressourceUrl}auth/`,
       {
         headers: new HttpHeaders().set('Authorization', `${token}`)
@@ -30,16 +31,20 @@ export class AuthService {
   }
 
   public logout(): Promise<any> {
-    return this.http.put(
-      `${BaseConf.ressourceUrl}auth/`,
+    return this.http.patch(
+      `${BaseConf.ressourceUrl}auth/${this.getUser().id}`,
       {},
       {
         headers: new HttpHeaders().set('Authorization', `${this.getToken()}`)
       }).toPromise();
   }
 
-  private getToken(): string {
+  public getToken(): string {
     return this.store.selectSnapshot((state => state.loggedInfo.token));
+  }
+
+  public getUser(): User {
+    return this.store.selectSnapshot((state => state.loggedInfo.user));
   }
 
 }

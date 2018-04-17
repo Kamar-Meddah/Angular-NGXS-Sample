@@ -3,7 +3,8 @@ import {Store} from '@ngxs/store';
 import {AuthService} from './service/auth.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Disconnect, SetLoggedInfo} from './store/loggedInfo.actions';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-root',
@@ -12,9 +13,9 @@ import {Router} from "@angular/router";
 })
 export class AppComponent implements OnInit {
 
-  private date: number;
+  public date: number;
 
-  constructor(private store: Store, private authService: AuthService, private router: Router) {
+  constructor(private store: Store, private authService: AuthService, private router: Router, private toastr: ToastrService) {
     this.date = new Date().getFullYear();
   }
 
@@ -22,16 +23,17 @@ export class AppComponent implements OnInit {
     const token = localStorage.getItem('token');
     if (token) {
       this.authService.checkToken(token)
-        .then((res: { valid: boolean }) => {
-          if (res.valid) {
-            this.store.dispatch(new SetLoggedInfo(token));
-          } else {
-            this.store.dispatch(new Disconnect());
-            this.router.navigate(['login']);
-          }
+        .then(() => {
+          this.store.dispatch(new SetLoggedInfo(token));
         })
         .catch((err: HttpErrorResponse) => {
-          console.log(err.message);
+          if (err.status === 406) {
+            this.toastr.warning('Session Expired');
+            this.store.dispatch(new Disconnect());
+            this.router.navigate(['login']);
+          } else {
+            this.toastr.warning(`You are currently offline`);
+          }
         });
     }
   }

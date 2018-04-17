@@ -1,7 +1,8 @@
 <mat-card class="container">
   <mat-card-header>
+    <img mat-card-avatar [src]="'http://i.pravatar.cc/150?u='+(user$| async)?.id" alt="Photo of a Shiba Inu">
     <mat-card-title class="mat-typography">
-      <h1 class="mat-headline mat-display-1 text-center">  Welcome {{username$ | async}} </h1>
+      <h1 class="mat-headline mat-display-1 text-center"> Welcome {{(user$| async)?.username}} </h1>
     </mat-card-title>
   </mat-card-header>
 

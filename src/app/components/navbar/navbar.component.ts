@@ -6,7 +6,8 @@ import {Observable} from 'rxjs/Observable';
 import {AuthService} from '../../service/auth.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ToastrService} from 'ngx-toastr';
-import {Disconnect} from "../../store/loggedInfo.actions";
+import {Disconnect} from '../../store/loggedInfo.actions';
+import {User} from '../../model/user';
 
 @Component({
   selector: 'app-navbar',
@@ -16,8 +17,12 @@ import {Disconnect} from "../../store/loggedInfo.actions";
 export class NavbarComponent implements OnInit {
 
   @Select(LoggedInfoState.getIsLogged) isLogged$: Observable<boolean>;
+  @Select(LoggedInfoState.getUser) user$: Observable<User>;
+  public opened: boolean;
+
 
   constructor(private router: Router, private authService: AuthService, private toast: ToastrService, private store: Store) {
+    this.opened = false;
   }
 
   ngOnInit() {
@@ -29,21 +34,17 @@ export class NavbarComponent implements OnInit {
 
   public logout(): void {
     this.authService.logout()
-      .then((res: boolean) => {
-        if (res) {
-          this.store.dispatch(new Disconnect());
-          this.toast.success('Successfully Disconnected');
-          this.router.navigate(['/login']);
-        } else {
-          this.toast.error('An Error Occurred');
-        }
+      .then(() => {
+        this.store.dispatch(new Disconnect());
+        this.toast.success('Successfully Disconnected');
+        this.router.navigate(['/login']);
       })
       .catch((err: HttpErrorResponse) => {
-        console.log(err.message);
+        if (err.status === 406) {
+          this.toast.error(`${err.error.message}`);
+        } else {
+          this.toast.warning(`You are currently offline`);
+        }
       });
-  }
-
-  public log() {
-    console.log('duck')
   }
 }

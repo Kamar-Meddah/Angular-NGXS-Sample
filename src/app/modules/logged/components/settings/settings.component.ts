@@ -12,9 +12,9 @@ import {HttpErrorResponse} from '@angular/common/http';
 })
 export class SettingsComponent implements OnInit {
 
-  private oldPassword: string;
-  private newPassword: string;
-  private email: string;
+  public oldPassword: string;
+  public newPassword: string;
+  public email: string;
 
   constructor(private userService: UserService, private toast: ToastrService, private titleService: Title) {
   }
@@ -26,19 +26,18 @@ export class SettingsComponent implements OnInit {
   public updatePassword(form: FormControl): void {
     if (form.valid && this.newPassword !== this.oldPassword) {
       this.userService.update(this.newPassword, this.oldPassword)
-        .then((res: { message: string, updated: string }) => {
-          if (res.updated === 'true') {
-            this.toast.success(`${res.message}`);
-            this.oldPassword = '';
-            this.newPassword = '';
-          } else {
-            this.toast.error(`${res.message}`);
-            this.oldPassword = '';
-
-          }
+        .then((res: { message: string, updated: boolean }) => {
+          this.toast.success(`Successfully updated`);
+          this.oldPassword = '';
+          this.newPassword = '';
         })
         .catch((err: HttpErrorResponse) => {
-          console.log(err.message);
+          if (err.status === 406) {
+            this.toast.error(`${err.error.message}`);
+            this.oldPassword = '';
+          } else {
+            this.toast.warning(`You are currently offline`);
+          }
         });
     }
   }
@@ -46,16 +45,16 @@ export class SettingsComponent implements OnInit {
   public updateEmail(form: FormControl): void {
     if (form.valid) {
       this.userService.update(null, null, this.email)
-        .then((res: { message: string, updated: string }) => {
-          if (res.updated === 'true') {
-            this.toast.success(`${res.message}`);
-            this.email = '';
-          } else {
-            this.toast.error(`${res.message}`);
-          }
+        .then((res: { message: string, updated: boolean }) => {
+          this.toast.success(`Successfully updated`);
         })
         .catch((err: HttpErrorResponse) => {
-          console.log(err.message);
+          if (err.status === 406) {
+            this.toast.error(`${err.error.message}`);
+            this.email = '';
+          } else {
+            this.toast.warning(`You are currently offline`);
+          }
         });
     }
   }

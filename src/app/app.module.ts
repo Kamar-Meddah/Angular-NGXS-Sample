@@ -19,13 +19,13 @@ import {NavbarComponent} from './components/navbar/navbar.component';
 import {CoreModule} from './modules/core.module';
 import {ToastrModule} from 'ngx-toastr';
 
-let devTools = [
-  NgxsReduxDevtoolsPluginModule.forRoot(),
-  NgxsLoggerPluginModule.forRoot(),
-];
+const devTools = [];
 
-if (environment.production === true) {
-  devTools = [];
+if (environment.production === false) {
+  devTools.push(
+    NgxsReduxDevtoolsPluginModule.forRoot(),
+    NgxsLoggerPluginModule.forRoot()
+  );
   enableProdMode();
 }
 

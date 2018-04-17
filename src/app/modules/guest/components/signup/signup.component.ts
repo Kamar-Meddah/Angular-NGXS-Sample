@@ -14,17 +14,16 @@ import {AuthService} from "../../../../service/auth.service";
 })
 export class SignupComponent implements OnInit {
 
-  private username: string;
-  private password: string;
-  private confirmedPassword: string;
-  private email: string;
+  public username: string;
+  public password: string;
+  public confirmedPassword: string;
+  public email: string;
 
-  constructor(private authService: AuthService, private userService: UserService, private tostr: ToastrService, private router: Router, private titleService: Title) {
+  constructor(private authService: AuthService, private userService: UserService, private toastr: ToastrService, private router: Router, private titleService: Title) {
   }
 
   ngOnInit() {
     if (this.authService.checkIfLogged()) {
-      console.log("hello")
       this.router.navigate(['/']);
     } else {
       this.titleService.setTitle('Signin');
@@ -34,16 +33,16 @@ export class SignupComponent implements OnInit {
   public sign(form: FormControl): void {
     if (form.valid && this.confirmedPassword === this.password) {
       this.userService.create(this.username, this.password, this.email)
-        .then((res: { created: string, message: string }) => {
-          if (res.created === 'true') {
-            this.tostr.success(`${res.message}`);
-            this.router.navigate(['login']);
-          } else {
-            this.tostr.error(`${res.message}`);
-          }
+        .then(() => {
+          this.toastr.success(`Request has been sent Successfully`);
+          this.router.navigate(['login']);
         })
         .catch((err: HttpErrorResponse) => {
-          console.log(err.message);
+          if (err.status === 406) {
+            this.toastr.error(`${err.error.message}`);
+          } else {
+            this.toastr.warning(`You are currently offline`);
+          }
         });
     }
   }

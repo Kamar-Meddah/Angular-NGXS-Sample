@@ -17,73 +17,80 @@
 
 
 <mat-menu #menu="matMenu" class="d-none d-sm-block">
+  <div *ngIf="(isLogged$ | async)">
+    <button mat-menu-item (click)="navigate('/')">
+      <img mat-card-avatar width="40px" [src]="'http://i.pravatar.cc/150?u='+(user$| async)?.id" alt="Photo of a Shiba Inu">
+      <span><b> {{(user$| async)?.username}}</b></span>
+    </button>
+    <mat-divider></mat-divider>
 
-  <button mat-menu-item (click)="navigate('/')" *ngIf="(isLogged$ | async)">
-    <mat-icon>home</mat-icon>
-    <span>Home</span>
-  </button>
-
-  <button mat-menu-item (click)="navigate('/settings')" *ngIf="(isLogged$ | async)">
-    <mat-icon>settings</mat-icon>
-    <span>Settings</span>
-  </button>
-  <mat-divider></mat-divider>
-  <button mat-menu-item (click)="logout()" *ngIf="(isLogged$ | async)">
-    <mat-icon>do_not_disturb_alt</mat-icon>
-    <span>Logout</span>
-  </button>
-
+    <button mat-menu-item (click)="navigate('/settings')">
+      <mat-icon>settings</mat-icon>
+      <span>Settings</span>
+    </button>
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>do_not_disturb_alt</mat-icon>
+      <span>Logout</span>
+    </button>
+  </div>
   <!-- Guest Mode -->
-  <button mat-menu-item (click)="navigate('/login')" *ngIf="!(isLogged$ | async)">
-    <mat-icon>people</mat-icon>
-    <span>Login</span>
-  </button>
-  <button mat-menu-item (click)="navigate('/sign')" *ngIf="!(isLogged$ | async)">
-    <mat-icon>assignment</mat-icon>
-    <span>Sign</span>
-  </button>
+  <div *ngIf="!(isLogged$ | async)">
+    <button mat-menu-item (click)="navigate('/login')">
+      <mat-icon>people</mat-icon>
+      <span>Login</span>
+    </button>
+    <button mat-menu-item (click)="navigate('/sign')">
+      <mat-icon>assignment</mat-icon>
+      <span>Sign</span>
+    </button>
+  </div>
 </mat-menu>
 
 
-<mat-sidenav-container class="sidebar d-block d-sm-none" (swipeleft)="sidenav.close()" >
-  <mat-sidenav #sidenav mode="side" [(opened)]="opened">
+<mat-sidenav-container class="sidebar d-block d-sm-none">
+  <mat-sidenav #sidenav mode="side" [(opened)]="opened" (swipeleft)="sidenav.close()">
     <mat-list role="list" (click)="sidenav.close()">
       <!-- guest -->
-      <mat-list-item role="listitem" *ngIf="!(isLogged$ | async)">
+      <div *ngIf="!(isLogged$ | async)">
+      <mat-list-item role="listitem">
         <button mat-menu-item (click)="navigate('/login')">
           <mat-icon>people</mat-icon>
           <span>Login</span>
         </button>
       </mat-list-item>
-      <mat-list-item role="listitem" *ngIf="!(isLogged$ | async)">
+      <mat-list-item role="listitem">
         <button mat-menu-item (click)="navigate('/sign')">
           <mat-icon>assignment</mat-icon>
           <span>Sign</span>
         </button>
       </mat-list-item>
+      </div>
       <!------- End guest ------->
 
       <!-------- logged --------->
+      <div *ngIf="(isLogged$ | async)">
       <mat-list-item role="listitem">
-        <button mat-menu-item (click)="navigate('/')" *ngIf="(isLogged$ | async)">
-          <mat-icon>home</mat-icon>
-          <span>Home</span>
+        <button mat-menu-item (click)="navigate('/')">
+          <img mat-card-avatar width="40px" [src]="'http://i.pravatar.cc/150?u='+(user$| async)?.id" alt="Photo of a Shiba Inu">
+          <span><b> {{(user$| async)?.username}}</b></span>
         </button>
       </mat-list-item>
+      <mat-divider></mat-divider>
       <mat-list-item role="listitem">
-
-        <button mat-menu-item (click)="navigate('/settings')" *ngIf="(isLogged$ | async)">
+        <button mat-menu-item (click)="navigate('/settings')">
           <mat-icon>settings</mat-icon>
           <span>Settings</span>
         </button>
       </mat-list-item>
       <mat-divider></mat-divider>
       <mat-list-item role="listitem">
-        <button mat-menu-item (click)="logout()" *ngIf="(isLogged$ | async)">
+        <button mat-menu-item (click)="logout()">
           <mat-icon>do_not_disturb_alt</mat-icon>
           <span>Logout</span>
         </button>
       </mat-list-item>
+      </div>
       <!------- End logged ------->
     </mat-list>
   </mat-sidenav>
