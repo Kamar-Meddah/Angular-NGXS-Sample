@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {BaseConf} from '../config/base.conf';
 import {Store} from '@ngxs/store';
 import {User} from "../model/user";
@@ -31,11 +31,11 @@ export class AuthService {
   }
 
   public logout(): Promise<any> {
-    return this.http.patch(
-      `${BaseConf.ressourceUrl}auth/${this.getUser().id}`,
-      {},
+    return this.http.delete(
+      `${BaseConf.ressourceUrl}auth/logout/`,
       {
-        headers: new HttpHeaders().set('Authorization', `${this.getToken()}`)
+        headers: new HttpHeaders().set('Authorization', `${this.getToken()}`),
+        params: new HttpParams().set('id', this.getUser().id),
       }).toPromise();
   }
 
@@ -45,6 +45,20 @@ export class AuthService {
 
   public getUser(): User {
     return this.store.selectSnapshot((state => state.loggedInfo.user));
+  }
+
+  public checkEmailIsValid(email: string): Promise<any> {
+    return this.http.patch(
+      `${BaseConf.ressourceUrl}auth/`,
+      {email: email}
+    ).toPromise();
+  }
+
+  public resetPassword(resetToken: string, password: string): Promise<any> {
+    return this.http.put(
+      `${BaseConf.ressourceUrl}auth/`,
+      {resetToken: resetToken, password: password}
+    ).toPromise();
   }
 
 }
