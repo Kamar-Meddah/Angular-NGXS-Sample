@@ -70,7 +70,7 @@ export class ResetPasswordComponent implements OnInit {
           } else {
             this.toastr.warning(`Your are Currently offline`);
           }
-        })
+        });
 
     }
   }

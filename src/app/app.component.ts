@@ -13,10 +13,7 @@ import {ToastrService} from 'ngx-toastr';
 })
 export class AppComponent implements OnInit {
 
-  public date: number;
-
   constructor(private store: Store, private authService: AuthService, private router: Router, private toastr: ToastrService) {
-    this.date = new Date().getFullYear();
   }
 
   ngOnInit() {
