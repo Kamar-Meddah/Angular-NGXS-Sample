@@ -18,8 +18,8 @@ import {LoadingBarHttpClientModule} from '@ngx-loading-bar/http-client';
 import {NavbarComponent} from './components/navbar/navbar.component';
 import {CoreModule} from './modules/core.module';
 import {ToastrModule} from 'ngx-toastr';
-import { NotfoundComponent } from './components/notfound/notfound.component';
-import { FooterComponent } from './components/footer/footer.component';
+import {NotfoundComponent} from './components/notfound/notfound.component';
+import {FooterComponent} from './components/footer/footer.component';
 
 const devTools = [];
 
@@ -55,7 +55,7 @@ if (environment.production === false) {
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
       closeButton: true,
-      progressBar: true,
+      progressBar: false,
     }),
     ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production}),
   ],

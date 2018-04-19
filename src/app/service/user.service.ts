@@ -1,9 +1,11 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {BaseConf} from '../config/base.conf';
 import {UserImpl} from '../model/user';
 import {Store} from '@ngxs/store';
 import {AuthService} from './auth.service';
+import {Observable} from "rxjs/Observable";
+import {PromiseState} from "q";
 
 @Injectable()
 export class UserService {
@@ -22,6 +24,35 @@ export class UserService {
     return this.http.put(
       `${BaseConf.ressourceUrl}user/${this.authService.getUser().id}/`,
       new UserImpl(null, password, email, null, oldPassword),
+      {
+        headers: new HttpHeaders().set('Authorization', `${this.authService.getToken()}`),
+      }
+    ).toPromise();
+  }
+
+  public getAllUsersP(page: string): Promise<any> {
+    return this.http.get(
+      `${BaseConf.ressourceUrl}user/`,
+      {
+        headers: new HttpHeaders().set('Authorization', `${this.authService.getToken()}`),
+        params: new HttpParams().set('page', page),
+      }
+    ).toPromise();
+  }
+
+  public deleteUser(id: string): Promise<any> {
+    return this.http.delete(
+      `${BaseConf.ressourceUrl}user/${id}`,
+      {
+        headers: new HttpHeaders().set('Authorization', `${this.authService.getToken()}`),
+      }
+    ).toPromise();
+  }
+
+  public updateRoleAndConfirm(role: string, id: string): Promise<any> {
+    return this.http.patch(
+      `${BaseConf.ressourceUrl}user/${id}`,
+      {role: role},
       {
         headers: new HttpHeaders().set('Authorization', `${this.authService.getToken()}`),
       }

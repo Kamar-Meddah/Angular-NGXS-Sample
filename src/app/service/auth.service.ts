@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {BaseConf} from '../config/base.conf';
 import {Store} from '@ngxs/store';
-import {User} from "../model/user";
+import {User} from '../model/user';
 
 @Injectable()
 export class AuthService {
@@ -28,6 +28,10 @@ export class AuthService {
 
   public checkIfLogged(): boolean {
     return this.store.selectSnapshot((state => state.loggedInfo.isLogged));
+  }
+
+  public checkIfAdmin(): boolean {
+    return this.getUser().role === 'admin' ;
   }
 
   public logout(): Promise<any> {

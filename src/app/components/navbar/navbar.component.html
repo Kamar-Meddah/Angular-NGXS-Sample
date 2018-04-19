@@ -1,4 +1,4 @@
-<mat-toolbar color="primary" class="toolbar" (swipeleft)="sidenav.close()" (swiperight)="sidenav.open()">
+<mat-toolbar color="primary" class="toolbar mat-elevation-z4" (swipeleft)="sidenav.close()" (swiperight)="sidenav.open()">
   <mat-toolbar-row>
     <button mat-icon-button (click)="sidenav.toggle()" class="d-block d-sm-none">
       <mat-icon>menu</mat-icon>
@@ -7,10 +7,6 @@
     <button mat-icon-button [matMenuTriggerFor]="menu" class="d-none d-sm-block">
       <mat-icon>more_vert</mat-icon>
     </button>
-
-    <a mat-icon-button routerLink="/" class="link" style="color:white;">
-      <mat-icon>home</mat-icon>
-    </a>
   </mat-toolbar-row>
 </mat-toolbar>
 <br>
@@ -19,7 +15,8 @@
 <mat-menu #menu="matMenu" class="d-none d-sm-block">
   <div *ngIf="(isLogged$ | async)">
     <button mat-menu-item (click)="navigate('/')">
-      <img mat-card-avatar width="40px" [src]="'http://i.pravatar.cc/150?u='+(user$| async)?.id" alt="Photo of a Shiba Inu">
+      <img mat-card-avatar width="40px" [src]="'http://i.pravatar.cc/150?u='+(user$| async)?.id"
+           alt="Photo of a Shiba Inu">
       <span><b> {{(user$| async)?.username}}</b></span>
     </button>
     <mat-divider></mat-divider>
@@ -28,9 +25,13 @@
       <mat-icon>settings</mat-icon>
       <span>Settings</span>
     </button>
+    <button mat-menu-item (click)="navigate('/administration')" *ngIf="(user$| async)?.role === 'admin'">
+      <mat-icon>supervisor_account</mat-icon>
+      <span>Administration</span>
+    </button>
     <mat-divider></mat-divider>
     <button mat-menu-item (click)="logout()">
-      <mat-icon>do_not_disturb_alt</mat-icon>
+      <mat-icon>exit_to_app</mat-icon>
       <span>Logout</span>
     </button>
   </div>
@@ -48,48 +49,59 @@
 </mat-menu>
 
 
-<mat-sidenav-container class="sidebar d-block d-sm-none">
-  <mat-sidenav #sidenav mode="side" [(opened)]="opened" (swipeleft)="sidenav.close()">
+<mat-sidenav-container class="sidebar d-block d-sm-none mat-elevation-z24">
+  <mat-sidenav #sidenav mode="side" [(opened)]="opened" (swipeleft)="sidenav.close()"  >
+    <mat-toolbar color="primary">
+      <span> Menu </span>
+    </mat-toolbar>
     <mat-list role="list" (click)="sidenav.close()">
       <!-- guest -->
       <div *ngIf="!(isLogged$ | async)">
-      <mat-list-item role="listitem">
-        <button mat-menu-item (click)="navigate('/login')">
-          <mat-icon>people</mat-icon>
-          <span>Login</span>
-        </button>
-      </mat-list-item>
-      <mat-list-item role="listitem">
-        <button mat-menu-item (click)="navigate('/sign')">
-          <mat-icon>assignment</mat-icon>
-          <span>Sign</span>
-        </button>
-      </mat-list-item>
+        <mat-list-item role="listitem">
+          <button mat-menu-item (click)="navigate('/login')">
+            <mat-icon>people</mat-icon>
+            <span>Login</span>
+          </button>
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          <button mat-menu-item (click)="navigate('/sign')">
+            <mat-icon>assignment</mat-icon>
+            <span>Sign</span>
+          </button>
+        </mat-list-item>
       </div>
       <!------- End guest ------->
 
       <!-------- logged --------->
       <div *ngIf="(isLogged$ | async)">
-      <mat-list-item role="listitem">
-        <button mat-menu-item (click)="navigate('/')">
-          <img mat-card-avatar width="40px" [src]="'http://i.pravatar.cc/150?u='+(user$| async)?.id" alt="Photo of a Shiba Inu">
-          <span><b> {{(user$| async)?.username}}</b></span>
-        </button>
-      </mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item role="listitem">
-        <button mat-menu-item (click)="navigate('/settings')">
-          <mat-icon>settings</mat-icon>
-          <span>Settings</span>
-        </button>
-      </mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item role="listitem">
-        <button mat-menu-item (click)="logout()">
-          <mat-icon>do_not_disturb_alt</mat-icon>
-          <span>Logout</span>
-        </button>
-      </mat-list-item>
+        <mat-list-item role="listitem">
+          <button mat-menu-item (click)="navigate('/')">
+            <img mat-card-avatar width="40px" [src]="'http://i.pravatar.cc/150?u='+(user$| async)?.id"
+                 alt="Photo of a Shiba Inu">
+            <span><b> {{(user$| async)?.username}}</b></span>
+          </button>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item role="listitem" *ngIf="(user$| async)?.role === 'admin'">
+          <button mat-menu-item (click)="navigate('/administration')">
+            <mat-icon>supervisor_account</mat-icon>
+            <span>Administration</span>
+          </button>
+        </mat-list-item>
+
+        <mat-list-item role="listitem">
+          <button mat-menu-item (click)="navigate('/settings')">
+            <mat-icon>settings</mat-icon>
+            <span>Settings</span>
+          </button>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item role="listitem">
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon>
+            <span>Logout</span>
+          </button>
+        </mat-list-item>
       </div>
       <!------- End logged ------->
     </mat-list>

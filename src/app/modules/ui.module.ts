@@ -6,10 +6,16 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
+  MatListModule,
   MatMenuModule,
+  MatPaginatorModule,
+  MatSelectModule,
+  MatSidenavModule,
+  MatStepperModule,
+  MatTableModule,
   MatToolbarModule,
-  MatSidenavModule, MatListModule, MatStepperModule,
 } from '@angular/material';
+import {NgxCoolDialogsModule} from "ngx-cool-dialogs";
 
 @NgModule({
   imports: [
@@ -23,6 +29,18 @@ import {
     MatDividerModule,
     MatListModule,
     MatStepperModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSelectModule,
+    NgxCoolDialogsModule.forRoot({
+      theme: 'default', // available themes: 'default' | 'material' | 'dark'
+      okButtonText: 'Yes',
+      cancelButtonText: 'No',
+      titles: {
+        alert: 'Danger!',
+        confirm: 'Confirmation',
+        prompt: 'Website asks...'
+      }}),
   ],
   exports: [
     MatCardModule,
@@ -36,7 +54,12 @@ import {
     MatSidenavModule,
     MatListModule,
     MatStepperModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSelectModule,
+    NgxCoolDialogsModule,
   ]
 })
+
 export class UiModule {
 }

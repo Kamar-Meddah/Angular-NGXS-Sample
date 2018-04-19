@@ -32,6 +32,7 @@
     "hammerjs": "^2.0.8",
     "jwt-decode": "^2.2.0",
     "material-design-icons": "^3.0.1",
+    "ngx-cool-dialogs": "^0.1.3",
     "ngx-toastr": "^8.4.0",
     "rxjs": "^5.5.9",
     "web-animations-js": "^2.3.1",

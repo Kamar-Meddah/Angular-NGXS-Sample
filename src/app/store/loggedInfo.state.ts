@@ -45,7 +45,7 @@ export class LoggedInfoState {
       isLogged: jwt != null,
       user: {
         id: jwt.sub,
-        role: jwt.aud === 'null' ? null : jwt.aud,
+        role: jwt.aud,
         username: jwt.iss
       },
     })

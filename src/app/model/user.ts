@@ -4,6 +4,7 @@ export interface User {
   email?: string;
   role?: string;
   id?: string;
+  createdAt?: string;
 }
 
 export class UserImpl implements User {
