@@ -1,4 +1,4 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from '../../../../../../service/user.service';
 import {ToastrService} from 'ngx-toastr';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -6,13 +6,14 @@ import {Subscription} from 'rxjs/Subscription';
 import {HttpErrorResponse} from '@angular/common/http';
 import {User} from '../../../../../../model/user';
 import {NgxCoolDialogsService} from 'ngx-cool-dialogs';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
-export class UsersComponent implements OnDestroy {
+export class UsersComponent implements OnInit, OnDestroy {
 
   public currentPage: string;
   public routeSubscription: Subscription;
@@ -23,7 +24,7 @@ export class UsersComponent implements OnDestroy {
   public query: string;
 
 
-  constructor(private userService: UserService, private toastr: ToastrService, private route: ActivatedRoute, private router: Router, private coolDialogs: NgxCoolDialogsService) {
+  constructor(private titleService: Title, private userService: UserService, private toastr: ToastrService, private route: ActivatedRoute, private router: Router, private coolDialogs: NgxCoolDialogsService) {
     this.currentPage = '1';
     let query: string | null;
     this.routeSubscription = this.route.queryParams.subscribe((res) => {
@@ -34,6 +35,10 @@ export class UsersComponent implements OnDestroy {
       }
       this.getUsers();
     });
+  }
+
+  ngOnInit() {
+    this.titleService.setTitle(`Manage users`);
   }
 
   ngOnDestroy() {
@@ -91,6 +96,7 @@ export class UsersComponent implements OnDestroy {
   }
 
   public search(): void {
+    this.query = this.query.trim();
     this.currentPage = '1';
     if (this.query !== '') {
       this.router.navigate(['/administration/users'], {

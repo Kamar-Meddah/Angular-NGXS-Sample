@@ -7,28 +7,14 @@
 .spacer {
   flex: 1 1 auto;
 }
-.link{
+
+.link {
   text-decoration: none;
   color: #1976D2;
 }
 
-.text-right{
-  text-align: right;
-}
-
-.text-left{
-  text-align: left;
-}
-.text-center{
-  text-align: center;
-}
-
 .matPrefix {
   margin-right: .5em;
-}
-
-.matPrefix {
-  margin-left: .5em;
 }
 
 .form-input {
@@ -36,31 +22,18 @@
   width: 98%;
 }
 
-@media (max-width: 992px) {
-  .form-control {
-    width: 70%;
-  }
-}
-.container{
-  width:80%;
-  margin-right: auto;
-  margin-left: auto;
-}
-.danger{
-  background-color: #red;}
-@media (max-width: 768px) {
-  .form-control {
-    width: 100%;
+.text {
+
+  &-right {
+    text-align: right;
   }
 
-  .container{
-    width:100%;
+  &-left {
+    text-align: left;
   }
-}
 
-@media (min-width: 992px) {
-  .form-control {
-    width: 50%;
+  &-center {
+    text-align: center;
   }
-}
 
+}

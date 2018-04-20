@@ -5,6 +5,7 @@ import {ToastrService} from "ngx-toastr";
 import {HttpErrorResponse} from "@angular/common/http";
 import {MatStepper} from "@angular/material";
 import {Router} from "@angular/router";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-reset-password',
@@ -22,7 +23,7 @@ export class ResetPasswordComponent implements OnInit {
   public password: string;
   public confirmedPassword: string;
 
-  constructor(private authService: AuthService, private toastr: ToastrService, private router: Router) {
+  constructor(private titleService: Title, private authService: AuthService, private toastr: ToastrService, private router: Router) {
     this.step1 = false;
     this.step2 = false;
     this.step3 = false;
@@ -30,6 +31,7 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.titleService.setTitle(`Password recovery`);
   }
 
   public sendResetRequest(form: FormControl, stepper: MatStepper) {
