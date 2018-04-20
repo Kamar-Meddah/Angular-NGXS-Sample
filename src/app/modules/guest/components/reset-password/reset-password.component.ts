@@ -20,6 +20,7 @@ export class ResetPasswordComponent implements OnInit {
   public email: string;
   public token: string;
   public password: string;
+  public confirmedPassword: string;
 
   constructor(private authService: AuthService, private toastr: ToastrService, private router: Router) {
     this.step1 = false;
@@ -57,7 +58,7 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   public updatePassword(form: FormControl) {
-    if (form.valid) {
+    if (form.valid && this.password === this.confirmedPassword) {
       this.authService.resetPassword(this.token, this.password)
         .then((res: any) => {
           this.step3 = true;

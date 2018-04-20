@@ -25,10 +25,17 @@
       <mat-icon>settings</mat-icon>
       <span>Settings</span>
     </button>
-    <button mat-menu-item (click)="navigate('/administration')" *ngIf="(user$| async)?.role === 'admin'">
+    <button [matMenuTriggerFor]="subMenu" mat-menu-item (click)="navigate('/administration')" *ngIf="(user$| async)?.role === 'admin'">
       <mat-icon>supervisor_account</mat-icon>
       <span>Administration</span>
+      <mat-icon>next</mat-icon>
     </button>
+    <mat-menu #subMenu="matMenu">
+      <button mat-menu-item (click)="navigate('/administration/users')" *ngIf="(user$| async)?.role === 'admin'">
+        <mat-icon>people</mat-icon>
+        <span>Manage users</span>
+      </button>
+    </mat-menu>
     <mat-divider></mat-divider>
     <button mat-menu-item (click)="logout()">
       <mat-icon>exit_to_app</mat-icon>

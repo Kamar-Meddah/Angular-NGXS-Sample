@@ -32,18 +32,7 @@ export class UsersComponent implements OnDestroy {
       } else {
         this.currentPage = res.page;
       }
-      if (res.query !== undefined) {
-        query = res.query;
-      }
-      this.userService.getAllUsersP(this.currentPage, query)
-        .then((users: any) => {
-          this.pageSize = users.totalPages;
-          this.pageLength = users.numberOfElements;
-          this.users = users;
-        })
-        .catch((err: HttpErrorResponse) => {
-          this.toastr.warning(`You are probably offline !`);
-        });
+      this.getUsers();
     });
   }
 
@@ -104,14 +93,27 @@ export class UsersComponent implements OnDestroy {
   public search(): void {
     this.currentPage = '1';
     if (this.query !== '') {
-    this.router.navigate(['/administration/users'], {
-      queryParams: {page: this.currentPage, query: this.query}
-    });
+      this.router.navigate(['/administration/users'], {
+        queryParams: {page: this.currentPage, query: this.query}
+      });
     } else {
       this.router.navigate(['/administration/users'], {
         queryParams: {page: this.currentPage}
       });
+      this.getUsers();
     }
+  }
+
+  private getUsers(): void {
+    this.userService.getAllUsersP(this.currentPage, this.query)
+      .then((users: any) => {
+        this.pageSize = users.totalPages;
+        this.pageLength = users.numberOfElements;
+        this.users = users;
+      })
+      .catch((err: HttpErrorResponse) => {
+        this.toastr.warning(`You are probably offline !`);
+      });
   }
 
 }

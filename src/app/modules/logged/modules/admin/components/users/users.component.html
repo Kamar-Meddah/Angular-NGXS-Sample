@@ -37,8 +37,8 @@
     <ng-container matColumnDef="action">
       <mat-header-cell *matHeaderCellDef> Action</mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <button class="mat-elevation-z2" color="primary" mat-mini-fab (click)="save(element)"><mat-icon>{{element.role !== null?'check':'save' }}</mat-icon></button>
-        <button class="mat-elevation-z2" color="warn" mat-mini-fab (click)="remove(element)">
+        <button class="mat-elevation-z1" color="primary" mat-mini-fab (click)="save(element)"><mat-icon>{{element.role !== null?'check':'save' }}</mat-icon></button>
+        <button class="mat-elevation-z1" color="warn" mat-mini-fab (click)="remove(element)">
           <mat-icon>delete_forever</mat-icon></button>
       </mat-cell>
     </ng-container>
