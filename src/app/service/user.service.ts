@@ -4,8 +4,6 @@ import {BaseConf} from '../config/base.conf';
 import {UserImpl} from '../model/user';
 import {Store} from '@ngxs/store';
 import {AuthService} from './auth.service';
-import {Observable} from "rxjs/Observable";
-import {PromiseState} from "q";
 
 @Injectable()
 export class UserService {
@@ -30,12 +28,14 @@ export class UserService {
     ).toPromise();
   }
 
-  public getAllUsersP(page: string): Promise<any> {
+  public getAllUsersP(page: string, query: string | null = null): Promise<any> {
     return this.http.get(
       `${BaseConf.ressourceUrl}user/`,
       {
         headers: new HttpHeaders().set('Authorization', `${this.authService.getToken()}`),
-        params: new HttpParams().set('page', page),
+        params: new HttpParams()
+          .set('page', page)
+          .set('query', query === null ? '' : query),
       }
     ).toPromise();
   }

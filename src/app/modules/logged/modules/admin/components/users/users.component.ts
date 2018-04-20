@@ -5,7 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import {HttpErrorResponse} from '@angular/common/http';
 import {User} from '../../../../../../model/user';
-import {NgxCoolDialogsService} from "ngx-cool-dialogs";
+import {NgxCoolDialogsService} from 'ngx-cool-dialogs';
 
 @Component({
   selector: 'app-users',
@@ -20,17 +20,22 @@ export class UsersComponent implements OnDestroy {
   public displayedColumns = ['username', 'email', 'confirmed', 'role', 'createdAt', 'action'];
   public pageLength: number;
   public pageSize: number;
+  public query: string;
 
 
   constructor(private userService: UserService, private toastr: ToastrService, private route: ActivatedRoute, private router: Router, private coolDialogs: NgxCoolDialogsService) {
     this.currentPage = '1';
+    let query: string | null;
     this.routeSubscription = this.route.queryParams.subscribe((res) => {
       if (res.page === undefined || res.page <= 0) {
         this.currentPage = '1';
       } else {
         this.currentPage = res.page;
       }
-      this.userService.getAllUsersP(this.currentPage)
+      if (res.query !== undefined) {
+        query = res.query;
+      }
+      this.userService.getAllUsersP(this.currentPage, query)
         .then((users: any) => {
           this.pageSize = users.totalPages;
           this.pageLength = users.numberOfElements;
@@ -79,7 +84,7 @@ export class UsersComponent implements OnDestroy {
           this.userService.deleteUser(element.id)
             .then((res: any) => {
               this.toastr.success(`${element.username} was deleted`);
-             // this.users.content = this.users.content.filter((elm) => elm.id !== element.id);
+              // this.users.content = this.users.content.filter((elm) => elm.id !== element.id);
               this.router.navigate(['/administration/users'], {
                 queryParams: {page: this.currentPage},
                 queryParamsHandling: 'merge'
@@ -94,6 +99,19 @@ export class UsersComponent implements OnDestroy {
             });
         }
       });
+  }
+
+  public search(): void {
+    this.currentPage = '1';
+    if (this.query !== '') {
+    this.router.navigate(['/administration/users'], {
+      queryParams: {page: this.currentPage, query: this.query}
+    });
+    } else {
+      this.router.navigate(['/administration/users'], {
+        queryParams: {page: this.currentPage}
+      });
+    }
   }
 
 }

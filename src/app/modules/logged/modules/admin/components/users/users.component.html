@@ -1,6 +1,6 @@
 <mat-card class="example-container container mat-elevation-z4">
-  <mat-form-field>
-    <input matInput placeholder="Filter">
+  <mat-form-field class="container">
+    <input matInput placeholder="Search" (keyup)="search()" [(ngModel)]="query">
   </mat-form-field>
   <mat-table #table [dataSource]="users?.content">
 
@@ -47,8 +47,8 @@
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
 
-  <mat-paginator [length]="paginationOprion?.pageSize"
-                 [pageSize]="paginationOprion?.length"
+  <mat-paginator [length]="pageSize"
+                 [pageSize]="pageLength"
                  (page)="change($event)"
   >
   </mat-paginator>
